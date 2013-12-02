@@ -77,4 +77,20 @@ public class Program {
 	public Set<Student> listStudents(){
 		return students;
 	}
+		public String getTimes(){
+		String timeOut = "";
+		for(time t: times){
+			//if(timeOut == null)timeOut = t.toString();
+			timeOut = (timeOut + "\n" + t.toString());
+		}
+		return timeOut;
+	}
+	
+	public void addSession(Session session){
+		sessions.add(session);
+	}
+	public Set<Session> getSessions() {
+		return sessions;
+	}
+	
 }
