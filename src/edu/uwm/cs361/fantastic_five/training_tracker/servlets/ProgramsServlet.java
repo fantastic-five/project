@@ -2,9 +2,12 @@ package edu.uwm.cs361.fantastic_five.training_tracker.servlets;
 
 import java.io.IOException;
 
+import javax.jdo.PersistenceManager;
 import javax.servlet.ServletException;
 import javax.servlet.http.*;
 
+import edu.uwm.cs361.fantastic_five.training_tracker.app.entities.Instructor;
+import edu.uwm.cs361.fantastic_five.training_tracker.app.entities.Program;
 import edu.uwm.cs361.fantastic_five.training_tracker.app.use_cases.ProgramFinder;
 import edu.uwm.cs361.fantastic_five.training_tracker.app.use_cases.responses.ListProgramsResponse;
 
@@ -30,10 +33,12 @@ public class ProgramsServlet extends BaseServlet {
 		catch(Exception e){
 			instructor = null;
 		}
-		if (instructor != null){
-			for(Program program : listProgramsResp.programs)
-				if (!program.getInstructor().equals(instructor))
+		if (instructor != null) {
+			for(Program program : listProgramsResp.programs) {
+				if (!program.getInstructor().equals(instructor)) {
 					listProgramsResp.programs.remove(program);
+				}
+			}
 		}
 		req.setAttribute("programs", listProgramsResp.programs);
 
