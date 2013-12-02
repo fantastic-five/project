@@ -5,9 +5,8 @@
 <footer>
 		<a href='' class="button green button-main">Student Records</a>
 		<br>
-		<a href='' class="button blue button-main">Schedule</a>
+		<a href='/programs' class="button blue button-main">Schedule</a>
 		<br>
 		<a href='' class="button gray button-main">Link</a><br><br><br><br>
 </footer>
-
 </t:mainLayout>

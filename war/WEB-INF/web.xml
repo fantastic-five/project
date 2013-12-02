@@ -222,6 +222,33 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 		<url-pattern>/treasury/program</url-pattern>
 	</servlet-mapping>
 
+	<!-- Attendance -->
+	<servlet>
+		<servlet-name>Attendance</servlet-name>
+		<servlet-class>edu.uwm.cs361.fantastic_five.training_tracker.servlets.AttendanceServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Attendance</servlet-name>
+		<url-pattern>/attendance</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>ViewAttendance</servlet-name>
+		<servlet-class>edu.uwm.cs361.fantastic_five.training_tracker.servlets.ViewAttendanceServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ViewAttendance</servlet-name>
+		<url-pattern>/attendance/view</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>InstructorSchedule</servlet-name>
+		<servlet-class>edu.uwm.cs361.fantastic_five.training_tracker.servlets.InstructorScheduleServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>InstructorSchedule</servlet-name>
+		<url-pattern>/schedule/instructor</url-pattern>
+	</servlet-mapping>
 	<!-- index -->
 	<welcome-file-list>
 		<welcome-file>homepage</welcome-file>

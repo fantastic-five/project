@@ -101,7 +101,7 @@ public class Program {
 	public Set<Student> listStudents(){
 		return students;
 	}
-	
+
 	public String getTimes(){
 		String timeOut = "";
 		for(time t: times){
@@ -110,11 +110,18 @@ public class Program {
 		}
 		return timeOut;
 	}
-	
+
 	private class dates{
-		
+
 	}
-	
+
+	public void addSession(Session session){
+		sessions.add(session);
+	}
+	public Set<Session> getSessions() {
+		return sessions;
+	}
+
 }
 
 
