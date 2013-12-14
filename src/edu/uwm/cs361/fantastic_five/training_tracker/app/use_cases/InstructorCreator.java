@@ -5,19 +5,30 @@ import javax.jdo.PersistenceManager;
 import edu.uwm.cs361.fantastic_five.training_tracker.app.entities.Instructor;
 import edu.uwm.cs361.fantastic_five.training_tracker.app.use_cases.requests.CreateInstructorRequest;
 import edu.uwm.cs361.fantastic_five.training_tracker.app.use_cases.responses.CreateInstructorResponse;
+import edu.uwm.cs361.fantastic_five.training_tracker.services.InstructorValidator;
 import edu.uwm.cs361.fantastic_five.training_tracker.services.PersistenceService;
 
 public class InstructorCreator {
 	public CreateInstructorResponse createInstructor(CreateInstructorRequest req) {
 		PersistenceManager pm = getPersistenceManager();
+		CreateInstructorResponse resp = new CreateInstructorResponse();
+		
+		resp.errors = new InstructorValidator().validate(req.firstName, req.lastName, req.username, req.password);
+		if (!resp.errors.isEmpty() ) {
+			resp.success = false;
+			return resp;
+		}
 
 		try {
-			pm.makePersistent(new Instructor(req.firstName, req.lastName, req.username, req.password));
+			Instructor instructor = new Instructor(req.firstName, req.lastName, req.username, req.password);
+			pm.makePersistent(instructor);
+			resp.instructor = Long.toString(instructor.getKey().getId());
+			resp.success = true;
 		} finally {
 			pm.close();
 		}
 
-		return new CreateInstructorResponse();
+		return resp;
 	}
 
 	private PersistenceManager getPersistenceManager()
