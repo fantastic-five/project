@@ -16,12 +16,12 @@ public class AppEngineSessionTest extends AppEngineTest {
 
 	@Before
 	public void setUpTests() {
-		this.session = new Session("12/9/13");
+		this.session = new Session("Monday",2013,12,9);
 	}
 
 	@Test
 	public void testKey() {
-		Session session2 = new Session("12/9/13");
+		Session session2 = new Session("Monday",2013,12,9);
 
 		PersistenceManager pm = getPersistenceManager();
 

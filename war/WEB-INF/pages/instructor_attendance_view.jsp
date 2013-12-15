@@ -7,7 +7,7 @@
 		<ul class="accordion">
 		<c:forEach items="${program.sessions}" var="session">
 			<li>
-			<h2>${session.date}</h2>
+			<h2>${session.date} (${session.day})</h2>
 			<div class ="content">
 			<c:if test="${not empty session.students}">
 				<c:forEach items= "${session.students}" var="student">

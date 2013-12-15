@@ -10,7 +10,11 @@
 		<c:forEach items="${program.sessions}" var="session">
 			<tr>
 				<c:set var="found" value="false"/>
-				<td><strong>${session.date}:</strong></td>
+				<td><strong>${session.date}: </strong> </td>
+				<c:if test="${empty session.students}">
+					<c:set var="found" value="true"/>
+					<td>--</td>
+				</c:if>
 				<c:forEach items="${session.students}" var="s">
 					<c:if test="${student.key.id == s.key.id}">
 						<td>Attended</td>

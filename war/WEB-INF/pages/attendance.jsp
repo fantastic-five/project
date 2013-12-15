@@ -7,8 +7,13 @@
 	<h1>Attendance for ${program.name}:</h1>
 	
 	<form class='well' action='' method='POST'>
-	<label for='name'>Date:</label>
-		<input type='text' id='date' name='date' value='${date}' />
+	<label for='date'>Date:</label>
+	<select name='date'>
+		<c:forEach items="${program.sessions}" var="session">
+			<option id='date' name='date' value='${session.key.id}'> ${session.date} </option>
+		</c:forEach>
+		</select>
+		<br>
 		<br>
 		<c:if test='${not empty program}'>
 			<form action='' method = 'POST'>

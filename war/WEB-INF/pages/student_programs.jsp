@@ -8,7 +8,7 @@
 		<c:forEach items="${programs}" var="program">
 			<li>
 			<h2>${program.name} <a href="/attendance/student?id=${program.key.id}">View Attendance</a></h2>
-			<div class ="content">${program.instructor}
+			<div class ="content">${program.instructor.fullName}
 			<br/>
 			${program.price}
 			<c:if test="${not empty program.times}">

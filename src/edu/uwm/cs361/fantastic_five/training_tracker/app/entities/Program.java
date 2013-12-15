@@ -40,7 +40,7 @@ public class Program {
 	
 	@Unowned
 	@Persistent
-	private Set<Session> sessions;
+	private List<Session> sessions;
 	
 	@Persistent
 	private List<time> times;
@@ -112,14 +112,13 @@ public class Program {
 	}
 	
 	public void addSession(Session session){
-		sessions.add(session);
+		int i;
+		for (i=0;i<sessions.size() && session.compareTo(sessions.get(i))>0;++i)
+		{}
+		sessions.add(i,session);
 	}
-	public Set<Session> getSessions(){
+	public List<Session> getSessions(){
 		return sessions;
-	}
-	
-	private class dates{
-		
 	}
 	
 }

@@ -2,7 +2,6 @@ package edu.uwm.cs361.fantastic_five.training_tracker.tests;
 
 import static org.junit.Assert.*;
 
-import javax.jdo.JDOHelper;
 import javax.jdo.PersistenceManager;
 
 import edu.uwm.cs361.fantastic_five.training_tracker.app.entities.Session;
@@ -11,31 +10,46 @@ import edu.uwm.cs361.fantastic_five.training_tracker.app.entities.Student;
 import org.junit.Before;
 import org.junit.Test;
 
-public class SessionTest {
+public class SessionTest extends AppEngineTest {
 	Session session;
-
+	Student student;
 	@Before
 	public void setUpTest() {
-		this.session = new Session("12/8/13");
+		PersistenceManager pm = getPersistenceManager();
+		session = new Session("Thursday",2013,12,12);
+		pm.makePersistent(session);
+		student = new Student("Cassie","Dowling","11/23/1992","dowling@uwm.edu","password",true);
+		pm.makePersistent(student);
 	}
 
 	@Test
 	public void testGetDate() {
-		assertEquals("12/8/13", session.getDate());
+		assertEquals("12/12/2013", session.getDate());
 	}
-/*
+	
+	@Test
+	public void testGetYear() {
+		assertEquals(2013, session.getYear());
+	}
+	
+	@Test
+	public void testGetMonth() {
+		assertEquals(12, session.getMonth());
+	}
+	
+	@Test
+	public void testGetDayInt(){
+		assertEquals(12, session.getDayInt());
+	}
+	@Test
+	public void testGetDay() {
+		assertEquals("Thursday", session.getDay());
+	}
+	
 	@Test
 	public void testAddStudent() {
-		PersistenceManager pm = getPersistenceManager();
-		Student student = new Student("Cassie","Dowling", "11/23/1992", "dowling@uwm.edu","password",true);
-		pm.makePersistent(student);
 		session.addStudent(student);
 		assertEquals(1, session.getStudents().size());
 		assertEquals(student,session.getStudents().iterator().next());
-	}
-	*/
-	private PersistenceManager getPersistenceManager()
-	{
-		return JDOHelper.getPersistenceManagerFactory("transactions-optional").getPersistenceManager();
 	}
 }
