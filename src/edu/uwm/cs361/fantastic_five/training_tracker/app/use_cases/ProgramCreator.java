@@ -13,10 +13,14 @@ public class ProgramCreator {
 	public CreateProgramResponse createProgram(CreateProgramRequest req) {
 		PersistenceManager pm = getPersistenceManager();
 		CreateProgramResponse resp = new CreateProgramResponse();
+		Instructor instructor = null;
 		
-		Instructor instructor = pm.getObjectById(Instructor.class, Long.parseLong(req.instructor));
+		try {
+			instructor = pm.getObjectById(Instructor.class, Long.parseLong(req.instructor));
+		}catch(NumberFormatException e) 
+		{ }
 		resp.errors = new ProgramValidator().validate(req.name, instructor, req.price);
-
+		
 		if (!resp.errors.isEmpty()) {
 			resp.success = false;
 			return resp;

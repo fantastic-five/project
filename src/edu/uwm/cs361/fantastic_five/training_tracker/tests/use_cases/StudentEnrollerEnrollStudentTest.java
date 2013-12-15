@@ -10,6 +10,7 @@ import javax.jdo.PersistenceManager;
 import org.junit.Before;
 import org.junit.Test;
 
+import edu.uwm.cs361.fantastic_five.training_tracker.app.entities.Instructor;
 import edu.uwm.cs361.fantastic_five.training_tracker.app.entities.Program;
 import edu.uwm.cs361.fantastic_five.training_tracker.app.entities.Student;
 import edu.uwm.cs361.fantastic_five.training_tracker.app.use_cases.ProgramCreator;
@@ -22,7 +23,6 @@ import edu.uwm.cs361.fantastic_five.training_tracker.app.use_cases.requests.Enro
 import edu.uwm.cs361.fantastic_five.training_tracker.app.use_cases.requests.ViewProgramRequest;
 import edu.uwm.cs361.fantastic_five.training_tracker.app.use_cases.responses.EnrollStudentResponse;
 import edu.uwm.cs361.fantastic_five.training_tracker.app.use_cases.responses.ViewProgramResponse;
-
 import edu.uwm.cs361.fantastic_five.training_tracker.tests.AppEngineTest;
 
 public class StudentEnrollerEnrollStudentTest extends AppEngineTest {
@@ -32,12 +32,15 @@ public class StudentEnrollerEnrollStudentTest extends AppEngineTest {
 
 	@Before
 	public void setUp() {
+		PersistenceManager pm = getPersistenceManager();
 		studentEnroller = new StudentEnroller();
 		req = new EnrollStudentRequest();
-
-		createProgram("Example Program", "Andrew Meyer", "2.60");
-		createStudent("Andrew", "Meyer", "andrew@example.com");
-		createStudent("Charlie", "Liberski", "charlie@example.com");
+		Instructor instructor = new Instructor("Cassie","Dowling","cassie","password");
+		pm.makePersistent(instructor);
+		
+		createProgram("Example Program", instructor, "2.60");
+		createStudent("Andrew", "Meyer", "01/01/2001","andrew@example.com");
+		createStudent("Charlie", "Liberski", "02/02/2002", "charlie@example.com");
 	}
 
 	private void generateValidRequest() {
@@ -49,20 +52,22 @@ public class StudentEnrollerEnrollStudentTest extends AppEngineTest {
 		resp = studentEnroller.enrollStudent(req);
 	}
 
-	private void createProgram(String name, String instructor, String price) {
+	private void createProgram(String name, Instructor instructor, String price) {
 		CreateProgramRequest req = new CreateProgramRequest();
 		req.name = name;
-		req.instructor = instructor;
+		req.instructor = Long.toString(instructor.getKey().getId());
 		req.price = price;
 
 		new ProgramCreator().createProgram(req);
 	}
 
-	private void createStudent(String firstName, String lastName, String email) {
+	private void createStudent(String firstName, String lastName, String DOB, String email) {
 		CreateStudentRequest req = new CreateStudentRequest();
 		req.firstName = firstName;
 		req.lastName = lastName;
+		req.DOB = DOB;
 		req.email = email;
+		req.primary = true;
 
 		new StudentCreator().createStudent(req);
 	}

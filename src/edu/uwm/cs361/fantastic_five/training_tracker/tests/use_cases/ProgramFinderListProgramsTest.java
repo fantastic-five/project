@@ -4,9 +4,12 @@ import static org.junit.Assert.*;
 
 import java.util.Iterator;
 
+import javax.jdo.PersistenceManager;
+
 import org.junit.Before;
 import org.junit.Test;
 
+import edu.uwm.cs361.fantastic_five.training_tracker.app.entities.Instructor;
 import edu.uwm.cs361.fantastic_five.training_tracker.app.entities.Program;
 import edu.uwm.cs361.fantastic_five.training_tracker.app.use_cases.ProgramCreator;
 import edu.uwm.cs361.fantastic_five.training_tracker.app.use_cases.ProgramFinder;
@@ -19,29 +22,37 @@ public class ProgramFinderListProgramsTest extends AppEngineTest {
 	ProgramFinder programFinder;
 	ListProgramsRequest req;
 	ListProgramsResponse resp;
+	Instructor instructor;
+	Instructor instructor2;
 
 	@Before
 	public void setUp() {
+		PersistenceManager pm = getPersistenceManager();
 		programFinder = new ProgramFinder();
 		req = new ListProgramsRequest();
+		
+		instructor = new Instructor("Cassie","Dowling","cassie","password");
+		pm.makePersistent(instructor);
+		instructor2 = new Instructor("FirstName","LastName","user","password");
+		pm.makePersistent(instructor2);
 	}
 
 	private void doRequest() {
 		resp = programFinder.listPrograms(req);
 	}
 
-	private void createProgram(String name, String instructor, String price) {
+	private void createProgram(String name, Instructor instructor, String price) {
 		CreateProgramRequest req = new CreateProgramRequest();
 		req.name = name;
-		req.instructor = instructor;
+		req.instructor = Long.toString(instructor.getKey().getId());
 		req.price = price;
 
 		new ProgramCreator().createProgram(req);
 	}
 
 	private void createPrograms() {
-		createProgram("Example Program", "Andrew Meyer", "2.60");
-		createProgram("Example Program 2", "Charlie Liberski", "7.20");
+		createProgram("Example Program", instructor, "2.60");
+		createProgram("Example Program 2", instructor2, "7.20");
 	}
 
 	@Test
@@ -75,10 +86,10 @@ public class ProgramFinderListProgramsTest extends AppEngineTest {
 			assertTrue(program.getName().equals("Example Program") || program.getName().equals("Example Program 2"));
 
 			if (program.getName().equals("Example Program")) {
-				assertEquals("Andrew Meyer", program.getInstructor());
+				assertEquals("Cassie Dowling", program.getInstructor().getFullName());
 				assertEquals(2.60, program.getPrice(), 0.001);
 			} else { // program.getName().equals("Example Program 2")
-				assertEquals("Charlie Liberski", program.getInstructor());
+				assertEquals("FirstName LastName", program.getInstructor().getFullName());
 				assertEquals(7.20, program.getPrice(), 0.001);
 			}
 		}

@@ -92,4 +92,29 @@ public class StudentValidatorTest {
 		assertNotNull(errors.get("email"));
 		assertFalse(errors.get("email").isEmpty());
 	}
+	
+	@Test
+	public void testBlankDOB() {
+		generateValidParams();
+		DOB = "";
+
+		validate();
+
+		assertFalse(errors.isEmpty());
+		assertNotNull(errors.get("dob"));
+		assertFalse(errors.get("dob").isEmpty());
+	}
+	
+	@Test
+	public void testInvalidDOB() {
+		generateValidParams();
+		DOB = "05/2012";
+
+		validate();
+
+		assertFalse(errors.isEmpty());
+		assertNotNull(errors.get("dob"));
+		assertFalse(errors.get("dob").isEmpty());
+	}
+	
 }

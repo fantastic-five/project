@@ -9,6 +9,7 @@ import javax.jdo.PersistenceManager;
 import org.junit.Before;
 import org.junit.Test;
 
+import edu.uwm.cs361.fantastic_five.training_tracker.app.entities.Instructor;
 import edu.uwm.cs361.fantastic_five.training_tracker.app.entities.Program;
 import edu.uwm.cs361.fantastic_five.training_tracker.app.use_cases.ProgramCreator;
 import edu.uwm.cs361.fantastic_five.training_tracker.app.use_cases.requests.CreateProgramRequest;
@@ -19,6 +20,7 @@ public class ProgramCreatorCreateProgramTest extends AppEngineTest {
 	private ProgramCreator programCreator;
 	private CreateProgramRequest req;
 	private CreateProgramResponse resp;
+	private Instructor instructor;
 
 	@Before
 	public void setUp() {
@@ -31,7 +33,10 @@ public class ProgramCreatorCreateProgramTest extends AppEngineTest {
 	}
 
 	private void generateValidRequest() {
-		req.instructor = "Andrew Meyer";
+		PersistenceManager pm = getPersistenceManager();
+		instructor = new Instructor("Cassie", "Dowling", "cassie", "password");
+		pm.makePersistent(instructor);
+		req.instructor = Long.toString(instructor.getKey().getId());
 		req.name = "Example Program";
 		req.price = "2.50";
 	}
@@ -68,10 +73,10 @@ public class ProgramCreatorCreateProgramTest extends AppEngineTest {
 	@Test
 	public void testProgramCreatedCorrectInstructor() {
 		generateValidRequest();
-		req.instructor = "Andrew Meyer";
+		req.instructor = Long.toString(instructor.getKey().getId());
 		doRequest();
 
-		assertEquals("Andrew Meyer", getFirstProgram().getInstructor());
+		assertEquals("Cassie Dowling", getFirstProgram().getInstructor().getFullName());
 	}
 
 	@Test
