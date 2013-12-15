@@ -10,15 +10,14 @@ import javax.jdo.PersistenceManager;
 
 import edu.uwm.cs361.fantastic_five.training_tracker.app.entities.Student;
 
-public class AccountValidator extends PersistenceService{
+public class DependentValidator extends PersistenceService{
 	private Map<String, List<String>> errors;
 
-	public Map<String, List<String>> validate(String primary, String address, String phone) {
+	public Map<String, List<String>> validate(String primary, String student) {
 		errors = new HashMap<String, List<String>>();
 
 		validatePrimary(primary);
-		validateAddress(address);
-		validatePhone(phone);
+		validateStudent(student);
 
 		return errors;
 	}
@@ -47,39 +46,27 @@ public class AccountValidator extends PersistenceService{
 		if (!primaryErrors.isEmpty()) errors.put("primary", primaryErrors);
 	}
 	
-	private void validateAddress(String address) {
-		List<String> addressErrors = new ArrayList<String>();
-
-		if (address == null || address.isEmpty()) {
-			addressErrors.add("Address must not be blank.");
-		}
-
-		if (!addressErrors.isEmpty()) errors.put("address", addressErrors);
-	}
-
-	private void validatePhone(String phone) {
-		List<String> phoneErrors = new ArrayList<String>();
-
-		if (phone == null || phone.isEmpty()) {
-			phoneErrors.add("Phone must not be blank.");
+	private void validateStudent(String student) {
+		List<String> dependentErrors = new ArrayList<String>();
+		PersistenceManager pm = getPersistenceManager();
+		long l = 1;
+		
+		if (student == null || student.isEmpty()) {
+			dependentErrors.add("Student must not be empty.");
 		}
 		
-		boolean err = false;
-		int i;
-		for (i=0; i<12 && i<phone.length() && !err; ++i) {
-			if (i == 3 || i == 7) {
-				if (phone.charAt(i) != '-')
-					err = true;
-			}
-			else if (!Character.isDigit(phone.charAt(i)))
-				err = true;
+		try {
+			l = Long.parseLong(student);
+		} catch(NumberFormatException e) {
+			dependentErrors.add("Invalid key for dependent student");
 		}
-		if (i < 12)
-			err = true;
 		
-		if (err)
-			phoneErrors.add("Phone number format is incorrect - should be ###-###-####");
-		if (!phoneErrors.isEmpty()) errors.put("phone", phoneErrors);
+		try {
+			pm.getObjectById(Student.class,l);
+		} catch (JDOObjectNotFoundException e) {
+			dependentErrors.add("Dependent does not exist");
+		}
+		
+		if (!dependentErrors.isEmpty()) errors.put("dependent", dependentErrors);
 	}
 }
-
