@@ -35,7 +35,7 @@ public class InstructorCreatorCreateInstructorTest extends AppEngineTest{
 		
 		assertTrue(resp.success);
 		assertTrue(resp.errors.isEmpty() );
-	}
+	} //end createValidInstructorTest
 	
 	@Test
 	public void instructorCreatedTest() {
@@ -52,7 +52,103 @@ public class InstructorCreatorCreateInstructorTest extends AppEngineTest{
 		doRequest();
 		
 		assertEquals("Abraham", getFirstInstructor().getFirstName() );
-	}
+	} //end instructorCreatedFirstNameTest
+	
+	@Test
+	public void instructorCreatedLastNameTest() {
+		generateValidRequest();
+		req.lastName = "Lincoln";
+		doRequest();
+		
+		assertEquals("Lincoln", getFirstInstructor().getLastName() );
+	} //end instructorCreatedLastNameTest
+	
+	@Test
+	public void instructorCreatedUsernameTest() {
+		generateValidRequest();
+		req.username = "lincoln14";
+		doRequest();
+		
+		assertEquals("lincoln14", getFirstInstructor().getUsername() );
+	} //end instructorCreatedUsernameTest
+	
+	@Test
+	public void instructorCreatedPasswordTest() {
+		generateValidRequest();
+		req.password = "cabin3";
+		doRequest();
+		
+		assertEquals("cabin3", getFirstInstructor().getPassword() );
+	} //end instructorCreatedPasswordTest
+	
+	@Test
+	public void instructorCreatedWithBlankFirstNameTest() {
+		generateValidRequest();
+		req.firstName = "";
+		doRequest();
+		
+		assertFalse(resp.success);
+		assertFalse(resp.errors.isEmpty() );
+		assertNotNull(resp.errors.get("firstName") );
+		assertFalse(resp.errors.get("firstName").isEmpty() );
+	} //end instructorCreatedWithBlankFirstNameTest
+	
+	@Test
+	public void instructorCreatedWithBlankLastNameTest() {
+		generateValidRequest();
+		req.lastName = "";
+		doRequest();
+		
+		assertFalse(resp.success);
+		assertFalse(resp.errors.isEmpty() );
+		assertNotNull(resp.errors.get("lastName") );
+		assertFalse(resp.errors.get("lastName").isEmpty() );
+	} //end instructorCreatedWithBlankLastNameTest
+	
+	@Test
+	public void instructorCreatedWithBlankUsernameTest() {
+		generateValidRequest();
+		req.username = "";
+		doRequest();
+		
+		assertFalse(resp.success);
+		assertFalse(resp.errors.isEmpty() );
+		assertNotNull(resp.errors.get("_username") );
+		assertFalse(resp.errors.get("_username").isEmpty() );
+	} //end instructorCreatedWithBlankUsernameTest
+	
+	@Test
+	public void instructorCreatedWithBlankPasswordTest() {
+		generateValidRequest();
+		req.password = "";
+		doRequest();
+		
+		assertFalse(resp.success);
+		assertFalse(resp.errors.isEmpty() );
+		assertNotNull(resp.errors.get("_password") );
+		assertFalse(resp.errors.get("_password").isEmpty() );
+	} //end instructorCreatedWithBlankPasswordTest
+	
+	@Test
+	public void instructorCreatedWithInvalidUsernameTest() {	//TODO FIX
+		generateValidRequest();
+		req.username = "guy";
+		doRequest();
+		
+		assertFalse(resp.success);
+		assertFalse(resp.errors.isEmpty() );
+		assertNotNull(resp.errors.get("_username") );
+		assertFalse(resp.errors.get("_username").isEmpty() );
+	} //end instructorCreatedWithInvalidUsername
+	
+	@Test
+	public void invalidStudentNotCreatedTest() {
+		generateValidRequest();
+		req.firstName = "";
+		doRequest();
+		
+		assertFalse(getInstructorList().iterator().hasNext() );
+	} //end invalidStudentNotCreatedTest
 	
 	//****************************************************
 	private void doRequest() {

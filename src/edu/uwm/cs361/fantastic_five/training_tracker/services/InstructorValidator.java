@@ -1,10 +1,9 @@
 package edu.uwm.cs361.fantastic_five.training_tracker.services;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import edu.uwm.cs361.fantastic_five.training_tracker.app.use_cases.requests.CreateInstructorRequest;
 
 public class InstructorValidator {
 
@@ -14,6 +13,7 @@ public class InstructorValidator {
 	
 	public Map<String, List<String>> validate(
 			String firstName, String lastName, String _username, String _password) {
+		errors = new HashMap<String, List<String>>();
 		
 		validateFirstName(firstName);
 		validateLastName(lastName);
@@ -57,7 +57,7 @@ public class InstructorValidator {
 		}
 
 		if (!nameErrors.isEmpty() ) {
-			errors.put("lastName", nameErrors);
+			errors.put("_username", nameErrors);
 		}
 	} //end validateUserName
 	
@@ -69,8 +69,10 @@ public class InstructorValidator {
 		}
 
 		if (!nameErrors.isEmpty() ) {
-			errors.put("lastName", nameErrors);
+			errors.put("_password", nameErrors);
 		}
 	} //end validateUserName
+	
+	
 	
 } //end class
