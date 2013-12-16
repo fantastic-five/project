@@ -45,6 +45,11 @@ public class Program {
 	@Persistent
 	private List<time> times;
 	
+	@Persistent
+	private String startDate;
+	
+	@Persistent
+	private String endDate;
 	
 	public Program(String name, Instructor instructor, double price)
 	{
@@ -53,13 +58,14 @@ public class Program {
 		this.price = price;		
 	}
 
-	public Program(String name, Instructor instructor, double price, List<time> times)
+	public Program(String name, Instructor instructor, double price, List<time> times, String start, String end)
 	{
 		this.name = name;
 		this.instructor = instructor;
 		this.price = price;
 		this.times= times;
-		
+		this.startDate = start;
+		this.endDate = end;
 	}
 	
 	public boolean getchooseTimes(){
@@ -121,6 +127,25 @@ public class Program {
 		return sessions;
 	}
 	
+	public String getStartDate() {
+		return startDate;
+	}
+	public int[] getStartDateArray() {
+		return getDateArray(startDate);
+	}
+	public String getEndDate() {
+		return endDate;
+	}
+	public int[] getEndDateArray() {
+		return getDateArray(endDate);
+	}
+	private int[] getDateArray(String date) {
+		int[] dateArray = new int[3];
+		dateArray[0] = Integer.parseInt(""+date.charAt(0)+date.charAt(1));		//month
+		dateArray[1] = Integer.parseInt(""+date.charAt(3)+date.charAt(4));		//day
+		dateArray[2] = Integer.parseInt(""+date.charAt(6)+date.charAt(7)+date.charAt(8)+date.charAt(9));	//year
+		return dateArray;
+	}
 }
 
 

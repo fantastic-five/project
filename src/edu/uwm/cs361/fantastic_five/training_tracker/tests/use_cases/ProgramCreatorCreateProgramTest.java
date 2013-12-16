@@ -39,6 +39,8 @@ public class ProgramCreatorCreateProgramTest extends AppEngineTest {
 		req.instructor = Long.toString(instructor.getKey().getId());
 		req.name = "Example Program";
 		req.price = "2.50";
+		req.startDate = "11/11/2013";
+		req.endDate = "11/18/2013";
 	}
 
 	@Test
@@ -158,5 +160,57 @@ public class ProgramCreatorCreateProgramTest extends AppEngineTest {
 		assertNotNull(resp.errors.get("price"));
 		assertFalse(resp.errors.get("price").isEmpty());
 	}
+	@Test
+	public void testCreateProgramWithBlankStartDate() {
+		generateValidRequest();
+		req.startDate = "";
+
+		doRequest();
+
+		assertFalse(resp.success);
+		assertFalse(resp.errors.isEmpty());
+		assertNotNull(resp.errors.get("date"));
+		assertFalse(resp.errors.get("date").isEmpty());
+	}
+
+	@Test
+	public void testCreateProgramWithInvalidStartDate() {
+		generateValidRequest();
+		req.startDate = "13/11/2013";
+
+		doRequest();
+
+		assertFalse(resp.success);
+		assertFalse(resp.errors.isEmpty());
+		assertNotNull(resp.errors.get("date"));
+		assertFalse(resp.errors.get("date").isEmpty());
+	}
+	
+	@Test
+	public void testCreateProgramWithBlankEndDate() {
+		generateValidRequest();
+		req.endDate = "";
+
+		doRequest();
+
+		assertFalse(resp.success);
+		assertFalse(resp.errors.isEmpty());
+		assertNotNull(resp.errors.get("date"));
+		assertFalse(resp.errors.get("date").isEmpty());
+	}
+
+	@Test
+	public void testCreateProgramWithInvalidEndDate() {
+		generateValidRequest();
+		req.endDate = "1/1/2014";
+
+		doRequest();
+
+		assertFalse(resp.success);
+		assertFalse(resp.errors.isEmpty());
+		assertNotNull(resp.errors.get("date"));
+		assertFalse(resp.errors.get("date").isEmpty());
+	}
+
 
 }

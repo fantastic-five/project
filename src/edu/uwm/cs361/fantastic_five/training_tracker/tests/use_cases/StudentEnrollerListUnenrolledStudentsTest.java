@@ -38,7 +38,7 @@ public class StudentEnrollerListUnenrolledStudentsTest extends AppEngineTest {
 		Instructor instructor = new Instructor("Cassie","Dowling","cassie","password");
 		pm.makePersistent(instructor);
 		
-		createProgram("Example Program", instructor, "2.60");
+		createProgram("Example Program", instructor, "2.60","12/12/2013","12/21/2013");
 		createStudent("Andrew", "Meyer", "01/01/2001", "andrew@example.com");
 		createStudent("Charlie", "Liberski", "02/02/2002","charlie@example.com");
 	}
@@ -47,11 +47,13 @@ public class StudentEnrollerListUnenrolledStudentsTest extends AppEngineTest {
 		resp = studentEnroller.listUnenrolledStudents(req);
 	}
 
-	private void createProgram(String name, Instructor instructor, String price) {
+	private void createProgram(String name, Instructor instructor, String price, String start, String end) {
 		CreateProgramRequest req = new CreateProgramRequest();
 		req.name = name;
 		req.instructor = Long.toString(instructor.getKey().getId());
 		req.price = price;
+		req.startDate = start;
+		req.endDate = end;
 
 		new ProgramCreator().createProgram(req);
 	}

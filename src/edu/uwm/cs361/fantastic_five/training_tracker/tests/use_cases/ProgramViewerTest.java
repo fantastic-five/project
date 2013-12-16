@@ -41,11 +41,13 @@ public class ProgramViewerTest extends AppEngineTest {
 		resp = programViewer.viewProgram(req);
 	}
 
-	private void createProgram(String name, Instructor instructor, String price) {
+	private void createProgram(String name, Instructor instructor, String price, String start, String end) {
 		CreateProgramRequest req = new CreateProgramRequest();
 		req.name = name;
 		req.instructor = Long.toString(instructor.getKey().getId());
 		req.price = price;
+		req.startDate = start;
+		req.endDate = end;
 
 		new ProgramCreator().createProgram(req);
 	}
@@ -121,7 +123,7 @@ public class ProgramViewerTest extends AppEngineTest {
 
 	private void createProgramWithoutStudents() {
 		createInstructor("Cassie","Dowling","cassie","password");
-		createProgram("Example Program", getFirstInstructor(), "2.60");
+		createProgram("Example Program", getFirstInstructor(), "2.60","12/12/2013","12/21/2013");
 	}
 
 	private void createProgramWithStudents() {

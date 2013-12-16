@@ -22,7 +22,7 @@ public class ProgramCreator extends PersistenceService {
 			instructor = pm.getObjectById(Instructor.class, Long.parseLong(req.instructor));
 		}catch(NumberFormatException e) 
 		{ }
-		resp.errors = new ProgramValidator().validate(req.name, instructor, req.price);
+		resp.errors = new ProgramValidator().validate(req.name, instructor, req.price, req.startDate, req.endDate);
 		
 		if (!resp.errors.isEmpty()) {
 			resp.success = false;
@@ -30,7 +30,7 @@ public class ProgramCreator extends PersistenceService {
 		}
 
 		try {
-			Program program = new Program(req.name, instructor, Double.parseDouble(req.price), req.dates);
+			Program program = new Program(req.name, instructor, Double.parseDouble(req.price), req.dates, req.startDate, req.endDate);
 			pm.makePersistent(program);
 
 			CreateSessionsRequest createReq = new CreateSessionsRequest();
@@ -38,7 +38,7 @@ public class ProgramCreator extends PersistenceService {
 			createReq.dates = program.getTimes();
 			CreateSessionsResponse createResp = new SessionsCreator().createSessions(createReq);
 			
-			if (!createResp.errors.isEmpty()) {
+			if (createResp.errors != null && !createResp.errors.isEmpty()) {
 				resp.success = false;
 				return resp;
 			}

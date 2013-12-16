@@ -41,11 +41,13 @@ public class ProgramIncomeViewerTest extends AppEngineTest {
 		resp = programIncomeViewer.viewProgramIncome(req);
 	}
 
-	private void createProgram(String name, Instructor instructor, String price) {
+	private void createProgram(String name, Instructor instructor, String price, String start, String end) {
 		CreateProgramRequest req = new CreateProgramRequest();
 		req.name = name;
 		req.instructor = Long.toString(instructor.getKey().getId());
 		req.price = price;
+		req.startDate = start;
+		req.endDate = end;
 
 		new ProgramCreator().createProgram(req);
 	}
@@ -84,8 +86,8 @@ public class ProgramIncomeViewerTest extends AppEngineTest {
 
 	private void createPrograms() {
 		createInstructor("Andrew","Meyer","andrew","password");
-		createProgram("Example Program", getFirstInstructor() , "2.60");
-		createProgram("Example Program 2", getFirstInstructor(), "7.20");
+		createProgram("Example Program", getFirstInstructor() , "2.60","11/11/2013","12/12/2013");
+		createProgram("Example Program 2", getFirstInstructor(), "7.20","12/12/2013","01/01/2014");
 	}
 	private void createStudents() {
 		createStudent("Andrew", "Meyer", "01/01/2001", "andrew@example.com");

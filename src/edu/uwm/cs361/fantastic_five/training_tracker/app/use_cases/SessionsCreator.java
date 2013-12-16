@@ -30,18 +30,26 @@ public class SessionsCreator extends PersistenceService {
 			return resp;
 		}
 		
-		Calendar cal = Calendar.getInstance(); 
-		cal.setLenient(true);
+		Calendar start = Calendar.getInstance(); 
+		start.setLenient(true);
+		Calendar end = Calendar.getInstance();
+		end.setLenient(true);
+		
+		int[] startDate = program.getStartDateArray();
+		int[] endDate = program.getEndDateArray();
+		start.set(startDate[2], startDate[0]-1, startDate[1]);
+		end.set(endDate[2], endDate[0]-1, endDate[1]);
+		
 		try {
-			for (int i=0;i<42;++i) {
-				cal.add(Calendar.DAY_OF_YEAR, 1);
+			while (start.compareTo(end) <= 0) {
 				for (time t : req.dates) {
-					if (cal.get(Calendar.DAY_OF_WEEK) == t.getDayInt()) {
-						Session session = new Session(t.getDay(),cal.get(Calendar.YEAR),cal.get(Calendar.MONTH)+1,cal.get(Calendar.DAY_OF_MONTH));
+					if (start.get(Calendar.DAY_OF_WEEK) == t.getDayInt()) {
+						Session session = new Session(t.getDay(),start.get(Calendar.YEAR),start.get(Calendar.MONTH)+1,start.get(Calendar.DAY_OF_MONTH));
 						pm.makePersistent(session);
 						program.addSession(session);
 					}
 				}
+				start.add(Calendar.DAY_OF_YEAR, 1);
 			}
 			resp.success = true;
 		} finally {

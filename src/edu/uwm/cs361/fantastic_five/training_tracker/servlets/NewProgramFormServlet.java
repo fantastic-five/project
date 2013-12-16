@@ -35,7 +35,9 @@ public class NewProgramFormServlet extends BaseServlet {
 		createRequest.name = req.getParameter("name");
 		createRequest.instructor = req.getParameter("instructor");
 		createRequest.price = req.getParameter("price");
-
+		createRequest.startDate = req.getParameter("startDate");
+		createRequest.endDate = req.getParameter("endDate");
+		
 		boolean chooseDays;
 		if(req.getParameter("chooseDays") != null && req.getParameter("chooseDays").equals("yes"))chooseDays = true;
 		
