@@ -42,7 +42,7 @@ public class SessionsCreator extends PersistenceService {
 		
 		try {
 			while (start.compareTo(end) <= 0) {
-				for (time t : req.dates) {
+				for (time t : program.getTimes()) {
 					if (start.get(Calendar.DAY_OF_WEEK) == t.getDayInt()) {
 						Session session = new Session(t.getDay(),start.get(Calendar.YEAR),start.get(Calendar.MONTH)+1,start.get(Calendar.DAY_OF_MONTH));
 						pm.makePersistent(session);

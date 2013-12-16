@@ -35,7 +35,6 @@ public class ProgramCreator extends PersistenceService {
 
 			CreateSessionsRequest createReq = new CreateSessionsRequest();
 			createReq.programId = Long.toString(program.getKey().getId());
-			createReq.dates = program.getTimes();
 			CreateSessionsResponse createResp = new SessionsCreator().createSessions(createReq);
 			
 			if (createResp.errors != null && !createResp.errors.isEmpty()) {
