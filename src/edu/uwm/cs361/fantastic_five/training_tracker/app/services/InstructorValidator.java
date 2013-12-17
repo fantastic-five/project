@@ -8,23 +8,23 @@ import java.util.Map;
 public class InstructorValidator {
 
 	private Map<String, List<String>> errors;
-	
+
 	//****************************************************
-	
+
 	public Map<String, List<String>> validate(
 			String firstName, String lastName, String _username, String _password) {
 		errors = new HashMap<String, List<String>>();
-		
+
 		validateFirstName(firstName);
 		validateLastName(lastName);
 		validateUsername(_username);
 		validatePassword(_password);
-		
+
 		return errors;
 	} //end validate
-	
+
 	//****************************************************
-	
+
 	private void validateFirstName(String firstName) {
 		List<String> nameErrors = new ArrayList<String>();
 
@@ -48,31 +48,31 @@ public class InstructorValidator {
 			errors.put("lastName", nameErrors);
 		}
 	} //end validateLastName
-	
+
 	private void validateUsername(String _username) {
 		List<String> nameErrors = new ArrayList<String>();
 
 		if (_username == null || _username.isEmpty()) {
-			nameErrors.add("Last name must not be blank.");
+			nameErrors.add("Username must not be blank.");
 		}
 
 		if (!nameErrors.isEmpty() ) {
 			errors.put("_username", nameErrors);
 		}
 	} //end validateUserName
-	
+
 	private void validatePassword(String _password) {
 		List<String> nameErrors = new ArrayList<String>();
 
 		if (_password == null || _password.isEmpty()) {
-			nameErrors.add("Last name must not be blank.");
+			nameErrors.add("Password must not be blank.");
 		}
 
 		if (!nameErrors.isEmpty() ) {
 			errors.put("_password", nameErrors);
 		}
 	} //end validateUserName
-	
-	
-	
+
+
+
 } //end class
