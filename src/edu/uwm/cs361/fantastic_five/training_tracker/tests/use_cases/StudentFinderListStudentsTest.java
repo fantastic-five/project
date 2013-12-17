@@ -30,18 +30,20 @@ public class StudentFinderListStudentsTest extends AppEngineTest {
 		resp = studentFinder.listStudents(req);
 	}
 
-	private void createStudent(String firstName, String lastName, String email) {
+	private void createStudent(String firstName, String lastName, String DOB, String email) {
 		CreateStudentRequest req = new CreateStudentRequest();
 		req.firstName = firstName;
 		req.lastName = lastName;
+		req.DOB = DOB;
 		req.email = email;
+		req.primary = true;
 
 		new StudentCreator().createStudent(req);
 	}
 
 	private void createStudents() {
-		createStudent("Andrew", "Meyer", "andrew@example.com");
-		createStudent("Charlie", "Liberski", "charlie@example.com");
+		createStudent("Andrew", "Meyer", "01/01/2001", "andrew@example.com");
+		createStudent("Charlie", "Liberski", "02/02/2002", "charlie@example.com");
 	}
 
 	@Test
@@ -76,9 +78,11 @@ public class StudentFinderListStudentsTest extends AppEngineTest {
 
 			if (student.getFirstName().equals("Andrew")) {
 				assertEquals("Meyer", student.getLastName());
+				assertEquals("01/01/2001",student.getDOB());
 				assertEquals("andrew@example.com", student.get_email());
 			} else { // student.getFirstName().equals("Charlie")
 				assertEquals("Liberski", student.getLastName());
+				assertEquals("02/02/2002",student.getDOB());
 				assertEquals("charlie@example.com", student.get_email());
 			}
 		}

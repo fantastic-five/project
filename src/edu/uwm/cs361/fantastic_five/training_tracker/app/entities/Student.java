@@ -35,6 +35,8 @@ public class Student {
 	@Persistent
 	private boolean primary;
 	
+	@Persistent
+	private double balance;
 	@Unowned
 	@Persistent
 	private Set<Program> programs;
@@ -49,6 +51,7 @@ public class Student {
 		this._email = _email;
 		this._password = _pass;
 		this.primary = primary;
+		this.balance = 0;
 	}
 
 	//****************************************************
@@ -125,4 +128,13 @@ public class Student {
 		return primary;
 	}
 	
+	public double getBalance(){
+		return balance;
+	}
+	public String balanceToString(){
+		return String.format("$%.2f", new Double(balance));
+	}
+	public void updateBalance(double price){
+		balance+=price;
+	}
 } //end class

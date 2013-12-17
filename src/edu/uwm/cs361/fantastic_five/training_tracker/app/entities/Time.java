@@ -15,13 +15,17 @@ public class Time {
 	public String day;
 	
 	@Persistent
+	public int dayInt;
+	
+	@Persistent
 	public String start_time;
 
 	@Persistent
 	public String end_time;
 	
-	public Time(String day, String start_time, String end_time){
+	public Time(String day, int dayInt, String start_time, String end_time){
 		this.day = day;
+		this.dayInt = dayInt;
 		this.start_time = start_time;
 		this.end_time = end_time;		
 	}
@@ -30,6 +34,9 @@ public class Time {
 		return day;
 	}
 	
+	public int getDayInt() {
+		return dayInt;
+	}
 	public String get_times(){
 		return start_time + " - " + end_time;
 	}

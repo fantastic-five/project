@@ -10,12 +10,15 @@ import javax.jdo.PersistenceManager;
 import org.junit.Before;
 import org.junit.Test;
 
+import edu.uwm.cs361.fantastic_five.training_tracker.app.entities.Instructor;
 import edu.uwm.cs361.fantastic_five.training_tracker.app.entities.Program;
 import edu.uwm.cs361.fantastic_five.training_tracker.app.entities.Student;
+import edu.uwm.cs361.fantastic_five.training_tracker.app.use_cases.InstructorCreator;
 import edu.uwm.cs361.fantastic_five.training_tracker.app.use_cases.ProgramCreator;
 import edu.uwm.cs361.fantastic_five.training_tracker.app.use_cases.ProgramViewer;
 import edu.uwm.cs361.fantastic_five.training_tracker.app.use_cases.StudentCreator;
 import edu.uwm.cs361.fantastic_five.training_tracker.app.use_cases.StudentEnroller;
+import edu.uwm.cs361.fantastic_five.training_tracker.app.use_cases.requests.CreateInstructorRequest;
 import edu.uwm.cs361.fantastic_five.training_tracker.app.use_cases.requests.CreateProgramRequest;
 import edu.uwm.cs361.fantastic_five.training_tracker.app.use_cases.requests.CreateStudentRequest;
 import edu.uwm.cs361.fantastic_five.training_tracker.app.use_cases.requests.EnrollStudentRequest;
@@ -38,23 +41,38 @@ public class ProgramViewerTest extends AppEngineTest {
 		resp = programViewer.viewProgram(req);
 	}
 
-	private void createProgram(String name, String instructor, String price) {
+	private void createProgram(String name, Instructor instructor, String price, String start, String end) {
 		CreateProgramRequest req = new CreateProgramRequest();
 		req.name = name;
-		req.instructor = instructor;
+		req.instructor = Long.toString(instructor.getKey().getId());
 		req.price = price;
+		req.startDate = start;
+		req.endDate = end;
 
 		new ProgramCreator().createProgram(req);
 	}
 
-	private void createStudent(String firstName, String lastName, String email) {
+	private void createStudent(String firstName, String lastName, String DOB, String email) {
 		CreateStudentRequest req = new CreateStudentRequest();
 		req.firstName = firstName;
 		req.lastName = lastName;
+		req.DOB = DOB;
 		req.email = email;
+		req.primary = true;
 
 		new StudentCreator().createStudent(req);
 	}
+	
+	private void createInstructor(String firstName, String lastName, String username, String password) {
+		CreateInstructorRequest req = new CreateInstructorRequest();
+		req.firstName = firstName;
+		req.lastName = lastName;
+		req.username = username;
+		req.password = password;
+
+		new InstructorCreator().createInstructor(req);
+	}
+
 
 	private void enrollStudent(Program program, Student student) {
 		String programId = Long.toString(program.getKey().getId());
@@ -93,14 +111,25 @@ public class ProgramViewerTest extends AppEngineTest {
 //		return students.iterator().next();
 //	}
 
+	@SuppressWarnings("unchecked")
+	private List<Instructor> getAllInstructors() {
+		PersistenceManager pm = getPersistenceManager();
+		return (List<Instructor>) pm.newQuery(Instructor.class).execute();
+	}
+	private Instructor getFirstInstructor() {
+		List<Instructor> instructors = getAllInstructors();
+		return instructors.iterator().next();
+	}
+
 	private void createProgramWithoutStudents() {
-		createProgram("Example Program", "Andrew Meyer", "2.60");
+		createInstructor("Cassie","Dowling","cassie","password");
+		createProgram("Example Program", getFirstInstructor(), "2.60","12/12/2013","12/21/2013");
 	}
 
 	private void createProgramWithStudents() {
 		createProgramWithoutStudents();
-		createStudent("Andrew", "Meyer", "andrew@example.com");
-		createStudent("Charlie", "Liberski", "charlie@example.com");
+		createStudent("Andrew", "Meyer", "01/01/2001","andrew@example.com");
+		createStudent("Charlie", "Liberski", "02/02/2002","charlie@example.com");
 
 		enrollAllStudents(getFirstProgram());
 	}

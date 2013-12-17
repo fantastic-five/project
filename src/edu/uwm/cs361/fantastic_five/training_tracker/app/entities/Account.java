@@ -37,7 +37,6 @@ public class Account {
 		this.primary = owner;
 		this.address = address;
 		this.phone = phone;
-		this.balance = 0.0;
 	}
 	
 	public Key getKey() {
@@ -74,12 +73,13 @@ public class Account {
 	}
 	
 	public double getBalance(){
+		double balance = primary.getBalance();
+		for (Student s : dependents) {
+			balance += s.getBalance();
+		}
 		return balance;
 	}
 	public String balanceToString(){
-		return String.format("$%.2f", new Double(balance));
-	}
-	public void updateBalance(double price){
-		balance+=price;
+		return String.format("$%.2f", new Double(getBalance()));
 	}
 }

@@ -10,4 +10,6 @@ public class CreateProgramRequest {
 	public String price;
 	public String discount;
 	public List<Time> dates;
+	public String startDate;
+	public String endDate;
 }

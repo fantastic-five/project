@@ -36,6 +36,9 @@ public class NewProgramFormServlet extends BaseServlet {
 		createRequest.instructor = req.getParameter("instructor");
 		createRequest.price = req.getParameter("price");
 
+		createRequest.startDate = req.getParameter("startDate");
+		createRequest.endDate = req.getParameter("endDate");
+		
 		boolean chooseDays;
 		if(req.getParameter("chooseDays") != null && req.getParameter("chooseDays").equals("yes"))chooseDays = true;
 		
@@ -45,20 +48,20 @@ public class NewProgramFormServlet extends BaseServlet {
 		List<Time> datesAndTimes = new ArrayList<Time>();
 		for(String s:day_array){
 			if(s.equals("sun")){
-				datesAndTimes.add(new Time("Sunday",req.getParameter("sun_start"), req.getParameter("mon_end")));
+				datesAndTimes.add(new Time("Sunday",1,req.getParameter("sun_start"), req.getParameter("mon_end")));
 			}
 			else if(s.equals("mon")){
-				datesAndTimes.add(new Time("Monday",req.getParameter("mon_start"), req.getParameter("mon_end")));
+				datesAndTimes.add(new Time("Monday",2,req.getParameter("mon_start"), req.getParameter("mon_end")));
 			}else if(s.equals("tue")){
-				datesAndTimes.add(new Time("Tuesday",req.getParameter("tue_start"), req.getParameter("tue_end")));
+				datesAndTimes.add(new Time("Tuesday",3,req.getParameter("tue_start"), req.getParameter("tue_end")));
 			}else if(s.equals("wed")){
-				datesAndTimes.add(new Time("Wednesday",req.getParameter("wed_start"), req.getParameter("wed_end")));
+				datesAndTimes.add(new Time("Wednesday",4,req.getParameter("wed_start"), req.getParameter("wed_end")));
 			}else if(s.equals("thu")){
-				datesAndTimes.add(new Time("Thursday",req.getParameter("thu_start"), req.getParameter("thu_end")));
+				datesAndTimes.add(new Time("Thursday",5,req.getParameter("thu_start"), req.getParameter("thu_end")));
 			}else if(s.equals("fri")){
-				datesAndTimes.add(new Time("Friday",req.getParameter("fri_start"), req.getParameter("fri_end")));
+				datesAndTimes.add(new Time("Friday",6,req.getParameter("fri_start"), req.getParameter("fri_end")));
 			}else if(s.equals("sat")){
-				datesAndTimes.add(new Time("Saturday",req.getParameter("sat_start"), req.getParameter("sat_end")));
+				datesAndTimes.add(new Time("Saturday",7,req.getParameter("sat_start"), req.getParameter("sat_end")));
 			}
 		}
 		createRequest.dates = datesAndTimes;

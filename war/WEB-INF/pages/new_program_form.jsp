@@ -26,6 +26,12 @@
 		<label for='discountPrice'>Family Price:</label>
 		<input type='text' id='discountprice' name='discountPrice' />
 		<br>
+		<br>
+		<label for='startDate'>Start Date:</label>
+		<input type='text' id='startDate' name='startDate' value='${startDate}' />
+		<label for='endDate'>End Date:</label>
+		<input type='text' id='endDate' name='endDate' value='${endDate}' />
+		<br>
 		<ul class="accordion">
 		<li>
 		<h2><input type="checkbox" name="day" value="sun"> Sunday</h2>

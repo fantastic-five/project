@@ -11,7 +11,7 @@
 		<label for='account'>Primary Account: </label>
 		<select name="primary">
 		<c:forEach items="${accounts}" var="account">
-			<option value='${account.key.id}'> ${account.primary.fullName} (${account.email})</option>
+			<option value='${account.primary.key.id}'> ${account.primary.fullName} (${account.email})</option>
 		</c:forEach>
 		</select>
 		<input type='submit' value='Add to Account' />

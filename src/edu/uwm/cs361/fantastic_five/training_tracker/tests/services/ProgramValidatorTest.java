@@ -18,20 +18,24 @@ public class ProgramValidatorTest {
 	private String name;
 	private Instructor instructor;
 	private String price;
-
+	private String start;
+	private String end;
+	
 	@Before
 	public void setUp() {
 		programValidator = new ProgramValidator();
 	}
 
 	private void validate() {
-		errors = programValidator.validate(name, instructor, price);
+		errors = programValidator.validate(name, instructor, price, start, end);
 	}
 
 	private void generateValidParams() {
 		name = "Example Program";
 		instructor = new Instructor("Cassie","Dowling","cassie","password");
 		price = "2.50";
+		start = "11/11/1911";
+		end = "12/12/1911";
 	}
 
 	@Test
@@ -88,5 +92,53 @@ public class ProgramValidatorTest {
 		assertFalse(errors.isEmpty());
 		assertNotNull(errors.get("price"));
 		assertFalse(errors.get("price").isEmpty());
+	}
+	
+	@Test
+	public void testBlankStart() {
+		generateValidParams();
+		start = "";
+
+		validate();
+
+		assertFalse(errors.isEmpty());
+		assertNotNull(errors.get("date"));
+		assertFalse(errors.get("date").isEmpty());
+	}
+
+	@Test
+	public void testInvalidStart() {
+		generateValidParams();
+		start = "12/12";
+
+		validate();
+
+		assertFalse(errors.isEmpty());
+		assertNotNull(errors.get("date"));
+		assertFalse(errors.get("date").isEmpty());
+	}
+	
+	@Test
+	public void testBlankEnd() {
+		generateValidParams();
+		end = "";
+
+		validate();
+
+		assertFalse(errors.isEmpty());
+		assertNotNull(errors.get("date"));
+		assertFalse(errors.get("date").isEmpty());
+	}
+
+	@Test
+	public void testInvalidEnd() {
+		generateValidParams();
+		end = "05/05/1911";
+
+		validate();
+
+		assertFalse(errors.isEmpty());
+		assertNotNull(errors.get("date"));
+		assertFalse(errors.get("date").isEmpty());
 	}
 }

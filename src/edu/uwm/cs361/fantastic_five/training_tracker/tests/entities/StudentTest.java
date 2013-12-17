@@ -63,4 +63,10 @@ public class StudentTest {
 		student.setPassword("happy");
 		assertEquals("happy", student.getPassword());
 	}
+	
+	@Test
+	public void testBalance() {
+		student.updateBalance(20.5);
+		assertEquals(20.5,student.getBalance(),.001);
+	}
 } // end class

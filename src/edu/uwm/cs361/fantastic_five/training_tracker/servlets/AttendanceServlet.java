@@ -27,8 +27,7 @@ public class AttendanceServlet extends BaseServlet {
 	public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
 		AttendanceRequest attendanceReq = new AttendanceRequest();
 		attendanceReq.ids = req.getParameterValues("students");
-		attendanceReq.date = req.getParameter("date");
-		attendanceReq.programId = req.getParameter("id");
+		attendanceReq.sessionId = req.getParameter("date");
 		
 		AttendanceResponse attendanceResponse = new AttendanceTaker().takeAttendance(attendanceReq);
 
