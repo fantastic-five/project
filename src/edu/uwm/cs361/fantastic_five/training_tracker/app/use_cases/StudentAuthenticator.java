@@ -24,6 +24,7 @@ public class StudentAuthenticator extends Authenticator {
 
 		if (results.iterator().hasNext()) {
 			resp.success = true;
+			resp.id = results.iterator().next().getKey().getId();
 		} else {
 			resp.success = false;
 		}

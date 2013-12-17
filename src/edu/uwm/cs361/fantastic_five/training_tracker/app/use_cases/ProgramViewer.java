@@ -4,9 +4,9 @@ import javax.jdo.JDOObjectNotFoundException;
 import javax.jdo.PersistenceManager;
 
 import edu.uwm.cs361.fantastic_five.training_tracker.app.entities.Program;
+import edu.uwm.cs361.fantastic_five.training_tracker.app.services.PersistenceService;
 import edu.uwm.cs361.fantastic_five.training_tracker.app.use_cases.requests.ViewProgramRequest;
 import edu.uwm.cs361.fantastic_five.training_tracker.app.use_cases.responses.ViewProgramResponse;
-import edu.uwm.cs361.fantastic_five.training_tracker.services.PersistenceService;
 
 public class ProgramViewer {
 	public ViewProgramResponse viewProgram(ViewProgramRequest req) {
@@ -33,7 +33,7 @@ public class ProgramViewer {
 			return resp;
 		}
 
-		if (program != null) resp.students = program.listStudents();
+		if (program != null) resp.students = program.getStudents();
 
 		return resp;
 	}

@@ -9,11 +9,11 @@ import javax.jdo.Query;
 
 import edu.uwm.cs361.fantastic_five.training_tracker.app.entities.Program;
 import edu.uwm.cs361.fantastic_five.training_tracker.app.entities.Student;
+import edu.uwm.cs361.fantastic_five.training_tracker.app.services.PersistenceService;
 import edu.uwm.cs361.fantastic_five.training_tracker.app.use_cases.requests.EnrollStudentRequest;
 import edu.uwm.cs361.fantastic_five.training_tracker.app.use_cases.requests.ListUnenrolledStudentsRequest;
 import edu.uwm.cs361.fantastic_five.training_tracker.app.use_cases.responses.EnrollStudentResponse;
 import edu.uwm.cs361.fantastic_five.training_tracker.app.use_cases.responses.ListUnenrolledStudentsResponse;
-import edu.uwm.cs361.fantastic_five.training_tracker.services.PersistenceService;
 
 public class StudentEnroller {
 	@SuppressWarnings("unchecked")
@@ -38,9 +38,13 @@ public class StudentEnroller {
 			} catch (JDOObjectNotFoundException ex) {
 				return resp;
 			}
+			
+			// Quick hack: Pre-load times so that they're there when the view
+			// tries to access them.
+			program.getTimes();
 
 			ArrayList<Student> unenrolledStudents = new ArrayList<Student>(allStudents);
-			unenrolledStudents.removeAll(program.listStudents());
+			unenrolledStudents.removeAll(program.getStudents());
 
 			resp.program = program;
 			resp.unenrolledStudents = unenrolledStudents;
@@ -102,7 +106,7 @@ public class StudentEnroller {
 				}
 
 				program.addStudent(student);
-
+				student.addProgram(program);
 				resp.success = true;
 			}
 		} finally {

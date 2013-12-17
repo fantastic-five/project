@@ -7,11 +7,12 @@
 	<ul class="accordion">
 		<c:forEach items="${students}" var="student">
 			<li>
-				<h2>${student.firstName}</h2>
+				<h2>${student.fullName}</h2>
 				<div class="content">
-					Email: ${student._email}
+					<strong>Email: </strong>${student._email} 
 					<br/>
-					Balance: ${student.balance}
+					<strong>Date of Birth: </strong>${student.DOB}
+					<br/>
 				</div>
 			</li>
 			<hr/>

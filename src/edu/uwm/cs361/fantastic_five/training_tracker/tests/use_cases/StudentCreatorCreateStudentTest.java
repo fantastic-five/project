@@ -34,6 +34,8 @@ public class StudentCreatorCreateStudentTest extends AppEngineTest {
 	private void generateValidRequest() {
 		req.firstName = "Andrew";
 		req.lastName = "Meyer";
+		req.primary = true;
+		req.DOB = "11/11/1911";
 		req.email = "andrew@example.com";
 	}
 
@@ -92,7 +94,16 @@ public class StudentCreatorCreateStudentTest extends AppEngineTest {
 
 		assertEquals("andrew@example.com", getFirstStudent().get_email());
 	}
+	
+	@Test
+	public void testStudentCreatedCorrectDOB() {
+		generateValidRequest();
+		req.email = "andrew@example.com";
+		doRequest();
 
+		assertEquals("11/11/1911", getFirstStudent().getDOB());
+	}
+	
 	@Test
 	public void testCreateStudentWithBlankFirstName() {
 		generateValidRequest();
@@ -144,7 +155,33 @@ public class StudentCreatorCreateStudentTest extends AppEngineTest {
 		assertNotNull(resp.errors.get("email"));
 		assertFalse(resp.errors.get("email").isEmpty());
 	}
+	
+	@Test
+	public void testCreateStudentWithBlankDOB() {
+		generateValidRequest();
+		req.DOB = "";
 
+		doRequest();
+
+		assertFalse(resp.success);
+		assertFalse(resp.errors.isEmpty());
+		assertNotNull(resp.errors.get("dob"));
+		assertFalse(resp.errors.get("dob").isEmpty());
+	}
+	
+	@Test
+	public void testCreateStudentWithInvalidDOB() {
+		generateValidRequest();
+		req.DOB = "1/2/1234";
+
+		doRequest();
+
+		assertFalse(resp.success);
+		assertFalse(resp.errors.isEmpty());
+		assertNotNull(resp.errors.get("dob"));
+		assertFalse(resp.errors.get("dob").isEmpty());
+	}
+	
 	@Test
 	public void testInvalidStudentNotCreated() {
 		generateValidRequest();

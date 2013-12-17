@@ -29,7 +29,7 @@ public class StudentLoginServlet extends BaseServlet {
 		LogInResponse logInResponse = new StudentAuthenticator().authenticate(logInRequest);
 
 		if (logInResponse.success) {
-			Cookie c = new Cookie("username",req.getParameter("username"));
+			Cookie c = new Cookie("id",Long.toString(logInResponse.id));
 			resp.addCookie(c);
 			resp.sendRedirect("/student");
 		} else {

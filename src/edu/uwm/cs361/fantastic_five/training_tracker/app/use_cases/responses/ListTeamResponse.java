@@ -8,8 +8,8 @@ import java.util.List;
 // things *way* easier though. This way, I don't have to create duplicate
 // data structures for both programs and students. Everything just works.
 import edu.uwm.cs361.fantastic_five.training_tracker.app.entities.Program;
-import edu.uwm.cs361.fantastic_five.training_tracker.app.entities.team;
+import edu.uwm.cs361.fantastic_five.training_tracker.app.entities.Team;
 
 public class ListTeamResponse {
-	public List<team> teams;
+	public List<Team> teams;
 }

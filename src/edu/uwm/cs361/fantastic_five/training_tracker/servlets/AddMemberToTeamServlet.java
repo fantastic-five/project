@@ -6,13 +6,13 @@
 import javax.servlet.http.*;
 
 	import edu.uwm.cs361.fantastic_five.training_tracker.app.use_cases.StudentEnroller;
-import edu.uwm.cs361.fantastic_five.training_tracker.app.use_cases.teamMemberEnroller;
+import edu.uwm.cs361.fantastic_five.training_tracker.app.use_cases.TeamMemberEnroller;
 import edu.uwm.cs361.fantastic_five.training_tracker.app.use_cases.requests.EnrollStudentRequest;
 import edu.uwm.cs361.fantastic_five.training_tracker.app.use_cases.requests.ListUnenrolledStudentsRequest;
-import edu.uwm.cs361.fantastic_five.training_tracker.app.use_cases.requests.addTeamMemberRequest;
+import edu.uwm.cs361.fantastic_five.training_tracker.app.use_cases.requests.AddTeamMemberRequest;
 import edu.uwm.cs361.fantastic_five.training_tracker.app.use_cases.responses.EnrollStudentResponse;
 import edu.uwm.cs361.fantastic_five.training_tracker.app.use_cases.responses.ListUnenrolledStudentsResponse;
-import edu.uwm.cs361.fantastic_five.training_tracker.app.use_cases.responses.addTeamMemberResponse;
+import edu.uwm.cs361.fantastic_five.training_tracker.app.use_cases.responses.AddTeamMemberResponse;
 
 	@SuppressWarnings("serial")
 	public class AddMemberToTeamServlet extends BaseServlet {
@@ -29,11 +29,11 @@ import edu.uwm.cs361.fantastic_five.training_tracker.app.use_cases.responses.add
 
 		public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException
 		{
-			addTeamMemberRequest addTeamMemberRequest = new addTeamMemberRequest();
+			AddTeamMemberRequest addTeamMemberRequest = new AddTeamMemberRequest();
 			addTeamMemberRequest.studentId = req.getParameter("student");
 			addTeamMemberRequest.teamId = req.getParameter("id");
 
-			addTeamMemberResponse addTeamMemberResponse = new teamMemberEnroller().addTeamMember(addTeamMemberRequest);
+			AddTeamMemberResponse addTeamMemberResponse = new TeamMemberEnroller().addTeamMember(addTeamMemberRequest);
 
 			if (addTeamMemberResponse.success) {
 				resp.sendRedirect("/programs");

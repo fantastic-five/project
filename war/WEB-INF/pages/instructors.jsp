@@ -8,7 +8,7 @@
 		<c:forEach items="${instructors}" var="instructor">
 
 			<li>
-			<h2><a href=""> ${instructor.firstName}</a></h2>
+			<h2><a href=""> ${instructor.fullName}</a></h2>
 			<div class ="content">
 			${instructor.username}
 			<br/>

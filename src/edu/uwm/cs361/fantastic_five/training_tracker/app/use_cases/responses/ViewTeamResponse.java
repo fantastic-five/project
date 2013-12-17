@@ -1,5 +1,5 @@
 package edu.uwm.cs361.fantastic_five.training_tracker.app.use_cases.responses;
-import edu.uwm.cs361.fantastic_five.training_tracker.app.entities.team;
+import edu.uwm.cs361.fantastic_five.training_tracker.app.entities.Team;
 
 
 import java.util.Set;
@@ -9,7 +9,7 @@ import edu.uwm.cs361.fantastic_five.training_tracker.app.entities.Student;
 
 public class ViewTeamResponse {
 
-	public team team;
+	public Team team;
 	public Set<Student> students;
 	
 }

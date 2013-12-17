@@ -221,7 +221,72 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 		<servlet-name>ProgramTreasury</servlet-name>
 		<url-pattern>/treasury/program</url-pattern>
 	</servlet-mapping>
+	
+	<!-- Attendance -->
+	<servlet>
+		<servlet-name>InstructorPrograms</servlet-name>
+		<servlet-class>edu.uwm.cs361.fantastic_five.training_tracker.servlets.InstructorProgramsServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>InstructorPrograms</servlet-name>
+		<url-pattern>/programs/instructor</url-pattern>
+	</servlet-mapping>
 
+	<servlet>
+		<servlet-name>Attendance</servlet-name>
+		<servlet-class>edu.uwm.cs361.fantastic_five.training_tracker.servlets.AttendanceServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Attendance</servlet-name>
+		<url-pattern>/attendance</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>InstructorAttendanceView</servlet-name>
+		<servlet-class>edu.uwm.cs361.fantastic_five.training_tracker.servlets.InstructorAttendanceViewServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>InstructorAttendanceView</servlet-name>
+		<url-pattern>/attendance/instructorview</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>StudentPrograms</servlet-name>
+		<servlet-class>edu.uwm.cs361.fantastic_five.training_tracker.servlets.StudentProgramsServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>StudentPrograms</servlet-name>
+		<url-pattern>/programs/student</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>StudentAttendance</servlet-name>
+		<servlet-class>edu.uwm.cs361.fantastic_five.training_tracker.servlets.StudentAttendanceServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>StudentAttendance</servlet-name>
+		<url-pattern>/attendance/student</url-pattern>
+	</servlet-mapping>
+	
+	<!-- Accounts -->
+	<servlet>
+		<servlet-name>AccountForm</servlet-name>
+		<servlet-class>edu.uwm.cs361.fantastic_five.training_tracker.servlets.AccountFormServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>AccountForm</servlet-name>
+		<url-pattern>/account/new</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>Accounts</servlet-name>
+		<servlet-class>edu.uwm.cs361.fantastic_five.training_tracker.servlets.AccountsServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Accounts</servlet-name>
+		<url-pattern>/accounts</url-pattern>
+	</servlet-mapping>
+	
 	<!-- index -->
 	<welcome-file-list>
 		<welcome-file>homepage</welcome-file>

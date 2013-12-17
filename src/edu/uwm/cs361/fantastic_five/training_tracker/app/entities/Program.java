@@ -7,9 +7,9 @@ import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
+import com.google.appengine.datanucleus.annotations.Unowned;
 
 import com.google.appengine.api.datastore.Key;
-import com.google.appengine.datanucleus.annotations.Unowned;
 
 @PersistenceCapable
 public class Program {
@@ -21,44 +21,55 @@ public class Program {
 	@Persistent
 	private String name;
 
+	@Unowned
 	@Persistent
-	private String instructor;
+	private Instructor instructor;
 
 	@Persistent
 	private double price;
-	
-	
+
 	@Persistent
 	private double discount;
-	
+
 	@Persistent
 	private boolean chooseTimes;
 
 	@Unowned
 	@Persistent
 	private Set<Student> students;
-	
-	
+
+	@Unowned
 	@Persistent
-	private List<time> times;
-	
-	
-	public Program(String name, String instructor, double price)//, List<time> times)
+	private List<Session> sessions;
+
+	@Persistent
+	private List<Time> times;
+
+	@Persistent
+	private String startDate;
+
+	@Persistent
+	private String endDate;
+
+	public Program(String name, Instructor instructor, double price)
 	{
 		this.name = name;
 		this.instructor = instructor;
 		this.price = price;
-		//this.times= times;
-		
 	}
 
-	public Program(String name, String instructor, double price, List<time> times)
+	public Program(String name, Instructor instructor, double price, List<Time> times, String start, String end)
 	{
 		this.name = name;
 		this.instructor = instructor;
 		this.price = price;
 		this.times= times;
-		
+		this.startDate = start;
+		this.endDate = end;
+	}
+
+	public boolean getchooseTimes(){
+		return chooseTimes;
 	}
 
 	public Key getKey()
@@ -75,11 +86,11 @@ public class Program {
 		this.name = name;
 	}
 
-	public String getInstructor()
+	public Instructor getInstructor()
 	{
 		return instructor;
 	}
-	public void setInstructor(String instructor)
+	public void setInstructor(Instructor instructor)
 	{
 		this.instructor = instructor;
 	}
@@ -98,23 +109,43 @@ public class Program {
 	public void addStudent(Student student){
 		students.add(student);
 	}
-	public Set<Student> listStudents(){
+	public Set<Student> getStudents(){
 		return students;
 	}
-	
-	public String getTimes(){
-		String timeOut = "";
-		for(time t: times){
-			//if(timeOut == null)timeOut = t.toString();
-			timeOut = (timeOut + "\n" + t.toString());
-		}
-		return timeOut;
+
+	public List<Time> getTimes(){
+		return times;
 	}
-	
-	private class dates{
-		
+
+	public void addSession(Session session){
+		int i;
+		for (i=0;i<sessions.size() && session.compareTo(sessions.get(i))>0;++i)
+		{}
+		sessions.add(i,session);
 	}
-	
+	public List<Session> getSessions(){
+		return sessions;
+	}
+
+	public String getStartDate() {
+		return startDate;
+	}
+	public int[] getStartDateArray() {
+		return getDateArray(startDate);
+	}
+	public String getEndDate() {
+		return endDate;
+	}
+	public int[] getEndDateArray() {
+		return getDateArray(endDate);
+	}
+	private int[] getDateArray(String date) {
+		int[] dateArray = new int[3];
+		dateArray[0] = Integer.parseInt(""+date.charAt(0)+date.charAt(1));		//month
+		dateArray[1] = Integer.parseInt(""+date.charAt(3)+date.charAt(4));		//day
+		dateArray[2] = Integer.parseInt(""+date.charAt(6)+date.charAt(7)+date.charAt(8)+date.charAt(9));	//year
+		return dateArray;
+	}
 }
 
 

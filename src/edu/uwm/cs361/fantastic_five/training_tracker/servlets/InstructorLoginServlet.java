@@ -2,6 +2,7 @@ package edu.uwm.cs361.fantastic_five.training_tracker.servlets;
 
 import java.io.IOException;
 
+import javax.jdo.PersistenceManager;
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -29,7 +30,7 @@ public class InstructorLoginServlet extends BaseServlet {
 		LogInResponse logInResponse = new InstructorAuthenticator().authenticate(logInRequest);
 
 		if (logInResponse.success) {
-			Cookie c = new Cookie("username",req.getParameter("username"));
+			Cookie c = new Cookie("id",Long.toString(logInResponse.id));
 			resp.addCookie(c);
 			resp.sendRedirect("/instructor");
 		} else {

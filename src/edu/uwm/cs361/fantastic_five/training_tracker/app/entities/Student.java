@@ -1,11 +1,14 @@
 package edu.uwm.cs361.fantastic_five.training_tracker.app.entities;
 
+import java.util.Set;
+
 import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
 import com.google.appengine.api.datastore.Key;
+import com.google.appengine.datanucleus.annotations.Unowned;
 
 @PersistenceCapable
 public class Student {
@@ -19,27 +22,36 @@ public class Student {
 
 	@Persistent
 	private String lastName;
-
+	
+	@Persistent
+	private String DOB;
+	
 	@Persistent
 	private String _email;
 	
 	@Persistent
 	private String _password;
-
+	
+	@Persistent
+	private boolean primary;
+	
 	@Persistent
 	private double balance;
-
-
+	@Unowned
+	@Persistent
+	private Set<Program> programs;
 
 	//****************************************************
 
-	public Student(String firstName, String lastName, String _email, String _pass) {
+	public Student(String firstName, String lastName, String DOB, String _email, String _pass, boolean primary) {
 
 		this.firstName = firstName;
 		this.lastName = lastName;
+		this.DOB = DOB;
 		this._email = _email;
 		this._password = _pass;
-		balance = 0.0;
+		this.primary = primary;
+		this.balance = 0;
 	}
 
 	//****************************************************
@@ -100,17 +112,29 @@ public class Student {
 	public void setPassword(String p) {
 		this._password = p;
 	}
+
+	public String getDOB() {
+		return DOB;
+	}
+	
+	public void addProgram(Program program){
+		programs.add(program);
+	}
+	public Set<Program> getPrograms() {
+		return programs;
+	}
+
+	public boolean isPrimary() {
+		return primary;
+	}
 	
 	public double getBalance(){
 		return balance;
 	}
-
 	public String balanceToString(){
 		return String.format("$%.2f", new Double(balance));
 	}
-
 	public void updateBalance(double price){
 		balance+=price;
 	}
-
 } //end class

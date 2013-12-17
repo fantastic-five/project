@@ -5,4 +5,6 @@ public class CreateStudentRequest {
 	public String lastName;
 	public String email;
 	public String password;
+	public boolean primary;
+	public String DOB;
 }

@@ -12,18 +12,18 @@ public class StudentServlet extends BaseServlet
 	@Override
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException
 	{
-		String username = null;
+		String id = null;
 		Cookie[] cookies = req.getCookies();
 
 		if (cookies != null) {
 			for (Cookie c : cookies) {
-				if (c.getName().equals("username")) {
-					username = c.getValue();
+				if (c.getName().equals("id")) {
+					id = c.getValue();
 				}
 			}
 		}
 
-		if (username != null) {
+		if (id != null) {
 			resp.sendRedirect("/studenthomepage");
 		}
 		else {

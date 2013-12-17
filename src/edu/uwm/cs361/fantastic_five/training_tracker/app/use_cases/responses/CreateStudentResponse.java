@@ -6,4 +6,5 @@ import java.util.Map;
 public class CreateStudentResponse {
 	public boolean success;
 	public Map<String, List<String>> errors;
+	public String student;
 }

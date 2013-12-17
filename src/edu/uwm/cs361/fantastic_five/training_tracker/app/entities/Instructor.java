@@ -39,7 +39,22 @@ public class Instructor {
 	}
 
 	//****************************************************
+	public boolean equals(Object other) {
+		if (other == null || !(other instanceof Instructor)) return false;
+		if (other == this) return true;
 
+		Instructor otherI = (Instructor) other;
+		if (!bothNullOrEqual(this.getKey(), otherI.getKey())) return false;
+		if (!bothNullOrEqual(this.firstName, otherI.firstName)) return false;
+		if (!bothNullOrEqual(this.lastName, otherI.lastName)) return false;
+		if (!bothNullOrEqual(this._username, otherI._username)) return false;
+
+		return true;
+	}
+	private boolean bothNullOrEqual(Object object1, Object object2) {
+		return (object1 == null ? object2 == null : object1.equals(object2));
+	}
+	
 	public Key getKey() {
 		return this.key;
 	}
