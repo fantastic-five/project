@@ -4,7 +4,7 @@ import java.util.List;
 
 import edu.uwm.cs361.fantastic_five.training_tracker.app.entities.Time;
 
-public class CreateProgramRequest {
+public class CreateProgramRequest extends UseCaseRequest {
 	public String name;
 	public String instructor;
 	public String price;

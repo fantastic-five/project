@@ -16,19 +16,22 @@ public class UserAuthenticator extends Authenticator {
 		PersistenceManager pm = getPersistenceManager();
 
 		Query q = pm.newQuery(User.class);
-		q.setFilter("username == paramUsername && password == paramPassword");
-		q.declareParameters("String paramUsername, String paramPassword");
+		q.setFilter("username == paramUsername");
+		q.declareParameters("String paramUsername");
 
 		LogInResponse resp = new LogInResponse();
-		List<User> results = (List<User>) q.execute(req.username, req.password);
 
-		if (results.iterator().hasNext()) {
-			resp.success = true;
-		} else {
+		List<User> results = (List<User>) q.execute(req.username);
+
+		if (!results.iterator().hasNext()) {
 			resp.success = false;
+			return resp;
 		}
+
+		User user = results.iterator().next();
+		resp.success = user.passwordMatches(req.password);
 
 		return resp;
 	}
-	
+
 } //end class

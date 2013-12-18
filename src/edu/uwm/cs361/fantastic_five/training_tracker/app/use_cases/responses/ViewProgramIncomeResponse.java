@@ -4,6 +4,6 @@ import java.util.List;
 
 import edu.uwm.cs361.fantastic_five.training_tracker.app.entities.Program;
 
-public class ViewProgramIncomeResponse {
+public class ViewProgramIncomeResponse extends UseCaseResponse {
 	public List<Program> programs;
 }
